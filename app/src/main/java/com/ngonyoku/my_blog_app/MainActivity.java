@@ -3,6 +3,8 @@ package com.ngonyoku.my_blog_app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +15,15 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.ngonyoku.my_blog_app.Fragments.AccountFragment;
+import com.ngonyoku.my_blog_app.Fragments.HomeFragment;
+import com.ngonyoku.my_blog_app.Fragments.NotificationsFragment;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -26,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private FloatingActionButton mPostFab;
+    private BottomNavigationView mBottomNavigationView;
+
+    private HomeFragment mHomeFragment;
+    private AccountFragment mAccountFragment;
+    private NotificationsFragment mNotificationsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +49,36 @@ public class MainActivity extends AppCompatActivity {
 
         mToolbar = findViewById(R.id.main_toolbar);
         mPostFab = findViewById(R.id.main_post_fab);
+        mBottomNavigationView = findViewById(R.id.main_bottonNavigationBar);
+
+        mHomeFragment = new HomeFragment();
+        mAccountFragment = new AccountFragment();
+        mNotificationsFragment = new NotificationsFragment();
 
         setSupportActionBar(mToolbar);
         mPostFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+            }
+        });
+
+        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.bottomNav_home:
+                        replaceFragment(mHomeFragment);
+                        return true;
+                    case R.id.bottomNav_notifications:
+                        replaceFragment(mNotificationsFragment);
+                        return true;
+                    case R.id.bottomNav_account:
+                        replaceFragment(mAccountFragment);
+                        return true;
+                    default:
+                        return false;
+                }
             }
         });
     }
@@ -97,12 +132,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*Redirects to the StartActivity*/
     private void goToStart() {
         startActivity(
                 new Intent(MainActivity.this, StartActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
         );
         finish();
+    }
+
+    /*Changing the Fragments on the Main Activity*/
+    private void replaceFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_container, fragment);
+        fragmentTransaction.commit();
     }
 
 }

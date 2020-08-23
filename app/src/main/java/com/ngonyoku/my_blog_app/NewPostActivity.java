@@ -146,7 +146,7 @@ public class NewPostActivity extends AppCompatActivity {
                                                 postMap.put("thumbnail_url", thumbnailUrl);
                                                 postMap.put("description", description);
                                                 postMap.put("user_id", mUser.getUid());
-                                                postMap.put("timestamp", FieldValue.serverTimestamp());
+//                                                postMap.put("timestamp", FieldValue.serverTimestamp());
                                                 addPostToFireStore(postMap);
                                             } else {
                                                 Toast.makeText(NewPostActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

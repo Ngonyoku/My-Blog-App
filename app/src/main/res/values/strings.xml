@@ -10,6 +10,7 @@
     <string name="save">Save</string>
     <string name="profile_set_up">Profile SetUp</string>
     <string name="username">Username</string>
+    <string name="description_txt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium adipisci aspernatur assumenda aut eius ex, excepturi fuga harum maiores, nam numquam porro provident quae quibusdam ratione sint vitae voluptas.</string>
     <string name="collection_Users">Users</string>
     <string name="storage_node_profile_images">Profile_Images</string>
     <string name="field_username">username</string>
@@ -17,4 +18,6 @@
     <string name="post">POST</string>
     <string name="add_description">Add Description</string>
     <string name="collection_Posts">Posts</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
