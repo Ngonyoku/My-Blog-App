@@ -36,6 +36,8 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -140,13 +142,16 @@ public class NewPostActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Uri> task) {
                                             if (task.isSuccessful()) {
+                                                Calendar calendar = Calendar.getInstance();
+                                                String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
                                                 String thumbnailUrl = task.getResult().toString();
                                                 Map<String, Object> postMap = new HashMap<>();
                                                 postMap.put("image_url", downloadUrl);
                                                 postMap.put("thumbnail_url", thumbnailUrl);
                                                 postMap.put("description", description);
                                                 postMap.put("user_id", mUser.getUid());
-//                                                postMap.put("timestamp", FieldValue.serverTimestamp());
+                                                postMap.put("timestamp", currentDate);
                                                 addPostToFireStore(postMap);
                                             } else {
                                                 Toast.makeText(NewPostActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();

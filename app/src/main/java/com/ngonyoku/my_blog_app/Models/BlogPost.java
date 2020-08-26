@@ -1,23 +1,32 @@
 package com.ngonyoku.my_blog_app.Models;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 public class BlogPost {
     private String description;
     private String image_url;
     private String thumbnail_url;
-    private Timestamp timeStamp;
+    private String timestamp;
     private String user_id;
 
     public BlogPost() {
     }
 
-    public BlogPost(String description, String image_url, String thumbnail_url, Timestamp timeStamp, String user_id) {
+    public BlogPost(String description, String image_url, String thumbnail_url, String timestamp, String user_id) {
         this.description = description;
         this.image_url = image_url;
         this.thumbnail_url = thumbnail_url;
-        this.timeStamp = timeStamp;
+        this.timestamp = timestamp;
         this.user_id = user_id;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getDescription() {
@@ -42,14 +51,6 @@ public class BlogPost {
 
     public void setThumbnail_url(String thumbnail_url) {
         this.thumbnail_url = thumbnail_url;
-    }
-
-    public Timestamp getTimeStamp() {
-        return timeStamp;
-    }
-
-    public void setTimeStamp(Timestamp timeStamp) {
-        this.timeStamp = timeStamp;
     }
 
     public String getUser_id() {

@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mBlogListRecyclerView = view.findViewById(R.id.home_bloglist_recyclerView);
         mProgressBar = view.findViewById(R.id.home_progressBar);
-        mAdapter = new BlogPostRecyclerViewAdapter(mPosts);
+        mAdapter = new BlogPostRecyclerViewAdapter(getActivity(), mPosts);
 
         mBlogListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        mBlogListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -67,12 +67,14 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         mPosts.clear();
-                        for (DocumentChange docs : value.getDocumentChanges()) { /*Loops over the items*/
-                            if (docs.getType() == DocumentChange.Type.ADDED) {/*Check if the data is Added*/
-                                BlogPost blogPost = docs.getDocument().toObject(BlogPost.class);
-                                mPosts.add(blogPost);
-                                mAdapter.notifyDataSetChanged();
-                                mProgressBar.setVisibility(View.GONE);
+                        if (error == null) {
+                            for (DocumentChange docs : value.getDocumentChanges()) { /*Loops over the items*/
+                                if (docs.getType() == DocumentChange.Type.ADDED) {/*Check if the data is Added*/
+                                    BlogPost blogPost = docs.getDocument().toObject(BlogPost.class);
+                                    mPosts.add(blogPost);
+                                    mAdapter.notifyDataSetChanged();
+                                    mProgressBar.setVisibility(View.GONE);
+                                }
                             }
                         }
                         mProgressBar.setVisibility(View.GONE);

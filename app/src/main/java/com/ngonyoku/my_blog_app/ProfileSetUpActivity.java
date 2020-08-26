@@ -29,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -115,13 +117,26 @@ public class ProfileSetUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             if (task.getResult().exists()) {
                                 String username = task.getResult().getString(getString(R.string.field_username));
-                                String image = task.getResult().getString(getString(R.string.field_profile_image_url));
+                                final String image = task.getResult().getString(getString(R.string.field_profile_image_url));
 
                                 mProfileUsername.getEditText().setText(username);
                                 Picasso
                                         .get()
                                         .load(image)
-                                        .into(mProfileImage)
+                                        .networkPolicy(NetworkPolicy.OFFLINE)
+                                        .fit()
+                                        .centerCrop()
+                                        .into(mProfileImage, new Callback() {
+                                            @Override
+                                            public void onSuccess() {
+
+                                            }
+
+                                            @Override
+                                            public void onError(Exception e) {
+                                                Picasso.get().load(image).fit().centerCrop().into(mProfileImage);
+                                            }
+                                        })
                                 ;
                             }
                             mSaveProfileBtn.setEnabled(true);

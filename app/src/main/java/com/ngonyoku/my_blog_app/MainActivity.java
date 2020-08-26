@@ -47,40 +47,45 @@ public class MainActivity extends AppCompatActivity {
         mUser = mAuth.getCurrentUser();
         mFirebaseFirestore = FirebaseFirestore.getInstance();
 
-        mToolbar = findViewById(R.id.main_toolbar);
-        mPostFab = findViewById(R.id.main_post_fab);
-        mBottomNavigationView = findViewById(R.id.main_bottonNavigationBar);
+        if (mUser != null) {
 
-        mHomeFragment = new HomeFragment();
-        mAccountFragment = new AccountFragment();
-        mNotificationsFragment = new NotificationsFragment();
+            mToolbar = findViewById(R.id.main_toolbar);
+            mPostFab = findViewById(R.id.main_post_fab);
+            mBottomNavigationView = findViewById(R.id.main_bottonNavigationBar);
 
-        setSupportActionBar(mToolbar);
-        mPostFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
-            }
-        });
+            mHomeFragment = new HomeFragment();
+            mAccountFragment = new AccountFragment();
+            mNotificationsFragment = new NotificationsFragment();
 
-        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.bottomNav_home:
-                        replaceFragment(mHomeFragment);
-                        return true;
-                    case R.id.bottomNav_notifications:
-                        replaceFragment(mNotificationsFragment);
-                        return true;
-                    case R.id.bottomNav_account:
-                        replaceFragment(mAccountFragment);
-                        return true;
-                    default:
-                        return false;
+            replaceFragment(mHomeFragment);
+
+            setSupportActionBar(mToolbar);
+            mPostFab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, NewPostActivity.class));
                 }
-            }
-        });
+            });
+
+            mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.bottomNav_home:
+                            replaceFragment(mHomeFragment);
+                            return true;
+                        case R.id.bottomNav_notifications:
+                            replaceFragment(mNotificationsFragment);
+                            return true;
+                        case R.id.bottomNav_account:
+                            replaceFragment(mAccountFragment);
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+            });
+        }
     }
 
     @Override
