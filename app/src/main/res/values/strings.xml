@@ -20,4 +20,9 @@
     <string name="collection_Posts">Posts</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="field_timestamp">timestamp</string>
+    <string name="field_user_id">user_id</string>
+    <string name="feild_description">description</string>
+    <string name="feild_thumbnail_url">thumbnail_url</string>
+    <string name="feild_image_url">image_url</string>
 </resources>

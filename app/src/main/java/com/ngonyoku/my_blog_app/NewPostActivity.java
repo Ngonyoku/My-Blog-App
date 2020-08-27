@@ -17,8 +17,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -147,11 +145,11 @@ public class NewPostActivity extends AppCompatActivity {
 
                                                 String thumbnailUrl = task.getResult().toString();
                                                 Map<String, Object> postMap = new HashMap<>();
-                                                postMap.put("image_url", downloadUrl);
-                                                postMap.put("thumbnail_url", thumbnailUrl);
-                                                postMap.put("description", description);
-                                                postMap.put("user_id", mUser.getUid());
-                                                postMap.put("timestamp", currentDate);
+                                                postMap.put(getString(R.string.feild_image_url), downloadUrl);
+                                                postMap.put(getString(R.string.feild_thumbnail_url), thumbnailUrl);
+                                                postMap.put(getString(R.string.feild_description), description);
+                                                postMap.put(getString(R.string.field_user_id), mUser.getUid());
+                                                postMap.put(getString(R.string.field_timestamp), currentDate);
                                                 addPostToFireStore(postMap);
                                             } else {
                                                 Toast.makeText(NewPostActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
